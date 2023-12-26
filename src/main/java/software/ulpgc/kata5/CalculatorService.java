@@ -2,10 +2,9 @@ package software.ulpgc.kata5;
 
 import spark.Request;
 
-public class CalculatorService implements Service {
+public class CalculatorService implements Service{
 
-    @Override
-    public String getCalculatorPage() {
+    public String getCalculatorPage(){
         return "<html>" +
                 "<body>" +
                 "<h2>Factorial Calculator</h2>" +
@@ -17,24 +16,22 @@ public class CalculatorService implements Service {
                 "</html>";
     }
 
-    @Override
-    public String calculateFactorial(Request request) {
-        String numberParams = request.queryParams("number");
+    public String calculateFactorial(Request req){
+        String numberParam = req.queryParams("number");
         try {
-            int number = Integer.parseInt(numberParams);
+            int number = Integer.parseInt(numberParam);
             long factorial = calculateFactorial(number);
-            return "Factorial de " + number + "es: " + factorial;
-        } catch (NumberFormatException e) {
-            return "Formato inválido. Introduce un número válido.";
+            return "Factorial of " + number + " is: " + factorial;
+        }catch (NumberFormatException e){
+            return "Invalid number format. Please enter a valid integer.";
         }
     }
 
-    @Override
     public long calculateFactorial(int number) {
-        if (number == 0 || number == 1){
+        if(number == 0 || number == 1){
             return 1;
-        } else {
-            return number * calculateFactorial(number-1);
+        }else{
+            return number*calculateFactorial(number-1);
         }
     }
 }
